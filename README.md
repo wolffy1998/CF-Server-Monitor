@@ -2,7 +2,7 @@
 
 一个基于 Cloudflare Workers + D1 + Durable Objects 的多服务器监控探针系统，支持实时监控、历史数据查看、延迟追踪、地图展示等功能。兼容主流Linux系统，Alpine Linux，OpenWrt，Windows系统。**演示地址**：<https://tz.dashdeep.dpdns.org/>
 
-**当前版本：V2.7.5**
+**当前版本：V2.7.6**
 
 <2.7.1 新增了功能，需要**升级安装脚本** 才能生效，否则无法获取丢包率
 ```
@@ -26,7 +26,7 @@ cat /etc/config/cf-probe/config.conf
 
 <details>
 <summary>更新记录</summary>
-
+- V2.7.6 添加多站点支持包括验证码登录等，添加Windows PowerShell无依赖安装脚本，一些安全优化
 - V2.7.5 DO WebSocket改成 DO WebSocket Hibernation基本剔除DO Duration消耗，新增批量推送入口，每5秒批量接收多个服务器更新，减少 DO 请求次数。
 - V2.7.4 添加允许跨域配置，为后续版本额外功能做铺垫，前端加上跨域配置，修改成HASH模式，修改country为region，数据库自动维护
 - V2.7.3.3 压缩定时任务4个为2个，避免超出免费额度
@@ -255,23 +255,11 @@ curl -sL https://你的项目.你的子域.workers.dev/install-openwrt.sh | sh -
 
 ### Windows 系统安装
 
-#### PowerShell 版（推荐，零依赖）
-
-无需安装任何依赖，纯 PowerShell 实现，功能完整。
-
-##### 下载探针脚本
-
-[cf-server-monitor.ps1](public/cf-server-monitor.ps1)
-
-##### 运行方式
-
-**1. 直接运行（前台调试）** 后台复制安装命令即可
-
 ```powershell
-irm https://你的项目.你的子域.workers.dev/cf-server-monitor.ps1 -OutFile cf-server-monitor.ps1; powershell -ExecutionPolicy Bypass -File .\cf-server-monitor.ps1 -Id <SERVER_ID> -Secret <SECRET> -Url <WORKER_URL> [-ReportInterval=60] [-PingType=tcp] [-CtNode=xxx] [-CuNode=xxx] [-CmNode=xxx] [-BdNode=xxx] [-ResetDay=1]
+irm https://你的项目.你的子域.workers.dev/cf-server-monitor.ps1 -OutFile cf-server-monitor.ps1; powershell -ExecutionPolicy Bypass -File .\cf-server-monitor.ps1 install -Id <SERVER_ID> -Secret <SECRET> -Url <WORKER_URL> [-ReportInterval=60] [-PingType=tcp] [-CtNode=xxx] [-CuNode=xxx] [-CmNode=xxx] [-BdNode=xxx] [-ResetDay=1]
 ```
 
-**3. 其他命令**
+**其他命令**
 
 ```powershell
 # 停止探针
@@ -283,22 +271,7 @@ powershell -ExecutionPolicy Bypass -File .\cf-server-monitor.ps1 status
 # 卸载服务
 powershell -ExecutionPolicy Bypass -File .\cf-server-monitor.ps1 uninstall
 ```
-
-#### Python 版（带 GUI 界面）
-
-如需图形界面管理，使用 Python 版本：
-
-##### 安装依赖
-
-`pip install psutil pystray pillow`
-
-##### 下载探针脚本
-
-[cf-server-monitor.pyw](public/cf-server-monitor.pyw)
-
-##### 运行探针
-
-双击`cf-server-monitor.pyw`文件即可启动探针。
+----
 
 ### 参数说明
 
