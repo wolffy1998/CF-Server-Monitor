@@ -1,4 +1,4 @@
-const CURRENT_VERSION = '2.7.12 Beta';
+const CURRENT_VERSION = '2.7.13 Beta';
 export const AGENT_VERSION = '1.3.1';
 export const DEFAULT_SITE_TITLE = 'Cloudflare Server Monitor';
 export const APPEARANCE_FIELDS = ['site_title', 'custom_bg', 'custom_head', 'custom_script', 'csp_static', 'csp_api', 'display_mode'];

@@ -14,7 +14,7 @@
         <div class="server-card-ring-meta">
           <span class="server-card-ring-os">
             <OsIcon :os="server.os" />
-            <span>{{ server.os || 'N/A' }}</span>
+            <span>{{ osName }}</span>
           </span>
           <span class="server-card-ring-dot">•</span>
           <span class="server-card-ring-uptime">{{ uptimeText }}</span>
@@ -94,7 +94,9 @@
 </template>
 
 <script setup>
+import { computed } from 'vue'
 import OsIcon from './OsIcon.vue'
+import { getOSName } from '../utils/osIcon'
 import { DEFAULT_SERVER_CARD_CONFIG, useServerCardData } from '../composables/useServerCardData'
 
 const props = defineProps({
@@ -138,4 +140,6 @@ const {
   pingList,
   getPublicAssetUrl
 } = useServerCardData(props)
+
+const osName = computed(() => getOSName(props.server.os))
 </script>
